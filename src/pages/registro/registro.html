@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Registro</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="register()" #registerForm="ngForm">
+      <ion-row>
+        <ion-col>
+          <ion-list inset>
+
+            <ion-item>
+              <ion-input type="text" placeholder="Nombre" name="name" [(ngModel)]="registerCredentials.name" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="text" placeholder="Apellido" name="apellido" [(ngModel)]="registerCredentials.apellido" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input type="number" placeholder="Telefono" name="telefono" [(ngModel)]="registerCredentials.telefono" required></ion-input>
+              </ion-item>
+              Sexo
+              <ion-item>
+                  <!-- 
+                    <ion-input type="text" placeholder="Sexo" name="sexo" [(ngModel)]="registerCredentials.sexo" required></ion-input>
+                   -->
+                   
+                  <ion-select multiple="false" [placeholder]="Sexo" [(ngModel)]="registerCredentials.sexo" name="sexo"  required>
+                           
+                      <ion-option [value]="F" >F</ion-option>
+                      <ion-option [value]="M" >M</ion-option>
+                    </ion-select>
+                
+                </ion-item>
+              <ion-item>
+                  <ion-input type="number" placeholder="Edad" name="edad" [(ngModel)]="registerCredentials.edad" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-datetime placeholder="Fecha de Nacimiento" displayFormat="YYYY-MM-DD"></ion-datetime>
+                </ion-item>
+
+
+            <ion-item>
+              <ion-input type="email" placeholder="Correo" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="password" placeholder="Confirmar Contraseña" name="confirmation_password" [(ngModel)]="registerCredentials.confirmation_password" required></ion-input>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="signup-col">
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Registrarme</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+</ion-content>

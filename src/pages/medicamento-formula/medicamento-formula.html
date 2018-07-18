@@ -1,0 +1,163 @@
+<ion-header>
+  <ion-navbar color="secondary" hideBackButton >
+    <ion-title>Confirmar: Medicamento # {{numero}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <p style="font-weight: bold;" color="secondary">Por favor, verifique y/o modifique la información del medicamento #  .</p>
+  <form  novalidate [formGroup]="group">
+      <ion-row>
+        
+
+             
+                  <ion-label style="font-weight: bold;">Medicamento:</ion-label>
+              
+
+            <!-- <ion-item>
+              <ion-input type="text" placeholder="Medicamento" [(ngModel)]="medicamento" name="medicament" formControlName="medicament" [class.error1]="!group.controls.medicament.valid" required></ion-input>
+            </ion-item> -->
+
+            <ion-item>
+
+                <ion-label stacked>Medicamento:</ion-label>
+                <ion-input *ngIf="medicVacio" type="text" placeholder="Medicamento" [(ngModel)]="medicamento" name="medicament" formControlName="medicament"  [class.error1]="!group.controls.medicament.valid" required></ion-input>
+                  
+                <ion-select *ngIf="!medicVacio" [(ngModel)]="medicamento" name="medicament" formControlName="medicament"  [class.error1]="!group.controls.medicament.valid">
+                   
+                  <ion-option  *ngFor="let item of medicamentosData" [value]="item" multiple="false" style="white-space: normal;">{{item}}</ion-option>
+                  
+                </ion-select>
+              </ion-item>
+
+
+            <ion-item no-lines *ngIf="getMedicament().hasError('required')  && getMedicament().touched">         
+              <div class="error" *ngIf="getMedicament().hasError('required') && getMedicament().touched">
+                Medicamento es un campo requerido
+              </div>
+            </ion-item>
+      
+        
+      </ion-row>
+      <ion-row>
+          <ion-label style="font-weight: bold;">Cantidad total y Presentación del Medicamento:</ion-label>
+          
+      </ion-row>
+            
+          <ion-row>
+              
+            <ion-col col-6>
+                <ion-item>
+                    <ion-label stacked>Cantidad:</ion-label>
+                    <ion-input type="number" placeholder="Cantidad" [(ngModel)]="cantidad_total" name="cantidad_tota" formControlName="cantidad_tota" [class.error1]="!group.controls.cantidad_tota.valid" required></ion-input>
+                  </ion-item>
+            </ion-col>
+            <ion-col col-6>
+                <ion-item>
+                    <ion-label stacked>Presentación:</ion-label>
+                    <ion-select [(ngModel)]="presentacion" name="presentacio" formControlName="presentacio" [class.error1]="!group.controls.presentacio.valid">
+                           
+                      <ion-option *ngFor="let item of presentacionData" [value]="item" multiple="false"  >{{item}}</ion-option>
+                      
+                    </ion-select>
+                  </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-item no-lines *ngIf="getPresentacio().hasError('required')  && getPresentacio().touched">         
+            <div class="error" *ngIf="getPresentacio().hasError('required') && getPresentacio().touched">
+              Presentación es un campo requerido
+            </div>
+          </ion-item>
+          <ion-item no-lines *ngIf="getCantidad_tota().hasError('required')  && getCantidad_tota().touched">         
+            <div class="error" *ngIf="getCantidad_tota().hasError('required') && getCantidad_tota().touched">
+              Cantidad es un campo requerido
+            </div>
+          </ion-item>
+
+          <ion-row>
+              <ion-label >Frecuencia de consumo:</ion-label>
+          </ion-row>
+          
+              <ion-row>
+                  
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label stacked>Cantidad:</ion-label>
+                        <ion-input type="number" placeholder="Cantidad" [(ngModel)]="frecuencia_cant" name="frecuencia_can" formControlName="frecuencia_can"  [class.error1]="!group.controls.frecuencia_can.valid" required></ion-input>
+                      </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label stacked>Unidad de tiempo:</ion-label>
+                        <ion-select [(ngModel)]="frecuencia_utiempo" name="frecuencia_utiemp" formControlName="frecuencia_utiemp"  [class.error1]="!group.controls.frecuencia_utiemp.valid">
+                           
+                          <ion-option *ngFor="let item of frecuenciaData" [value]="item" multiple="false" >{{item}}</ion-option>
+                          
+                        </ion-select>
+                      </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-item no-lines *ngIf="getFrecuencia_can().hasError('required')  && getFrecuencia_can().touched">         
+                <div class="error" *ngIf="getFrecuencia_can().hasError('required') && getFrecuencia_can().touched">
+                  Cantidad es un campo requerido
+                </div>
+              </ion-item>
+              <ion-item no-lines *ngIf="getFrecuencia_utiemp().hasError('required')  && getFrecuencia_utiemp().touched">         
+                <div class="error" *ngIf="getFrecuencia_utiemp().hasError('required') && getFrecuencia_utiemp().touched">
+                  Unidad de tiempo es un campo requerido
+                </div>
+              </ion-item>
+
+                  <ion-row>
+                    <ion-label >Fecha/Hora inicio de consumo:</ion-label>
+                </ion-row>
+                
+                    <ion-row>
+                        
+                      <ion-col col-6>
+                        <ion-item>
+                          <ion-label stacked>Fecha:</ion-label>
+                          <ion-datetime displayFormat="YYYY-MMMM-DD" [(ngModel)]="fecha_inicio" name="fecha_inici" formControlName="fecha_inici" [class.error1]="!group.controls.fecha_inici.valid" required></ion-datetime>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col col-6>
+                        <ion-item>
+                          <ion-label stacked>Hora:</ion-label>
+                          <ion-datetime displayFormat="HH:mm" [(ngModel)]="hora_inicio" name="hora_inici"  formControlName="hora_inici" [class.error1]="!group.controls.hora_inici.valid" required></ion-datetime>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>   
+                    <ion-item no-lines *ngIf="getFecha_inici().hasError('required')  && getFecha_inici().touched">         
+                      <div class="error" *ngIf="getFecha_inici().hasError('required') && getFecha_inici().touched">
+                        Fecha es un campo requerido
+                      </div>
+                    </ion-item>
+                    <ion-item no-lines *ngIf="getHora_inici().hasError('required')  && getHora_inici().touched">         
+                      <div class="error" *ngIf="getHora_inici().hasError('required') && getHora_inici().touched">
+                        Hora de tiempo es un campo requerido
+                      </div>
+                    </ion-item>
+      <ion-row>
+        <ion-col *ngIf="!bandera_ultimoMed">
+          <button ion-button class="submit-btn" full type="submit" color="secondary" [disabled]="group.invalid" (click)="registrar()" >Confirmar y Continuar</button>
+        </ion-col>
+        <ion-col *ngIf="!bandera_ultimoMed">
+          <button ion-button class="submit-btn" full type="submit" color="danger" (click)="cancelar()">Descartar Medicamento</button>
+        </ion-col>
+        <ion-col *ngIf="bandera_ultimoMed">
+          <button ion-button class="submit-btn" full type="submit" color="primary" [disabled]="group.invalid" (click)="confirmar_y_anadir()">Confirmar y Añadir Medicamento</button>
+        </ion-col>
+        <ion-col *ngIf="bandera_ultimoMed">
+          <button ion-button class="submit-btn" full type="submit" color="secondary" [disabled]="group.invalid" (click)="confirmar_terminar()">Confirmar y Terminar</button>
+        </ion-col>
+        <ion-col *ngIf="bandera_ultimoMed">
+          <button ion-button class="submit-btn" full type="submit" color="primary" (click)="descartar_terminar()">Descartar y Terminar</button>
+        </ion-col>
+        <ion-col *ngIf="bandera_ultimoMed">
+          <button ion-button class="submit-btn" full type="submit" color="secondary" (click)="descartar_y_anadir()">Descartar y Añadir Medicamento</button>
+        </ion-col>
+        
+      </ion-row>
+
+    </form>
+</ion-content>

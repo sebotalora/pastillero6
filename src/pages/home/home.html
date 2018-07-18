@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Medicamentos Pendientes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngFor="let dia of dias_ord">
+
+    <ion-item >
+      <ion-thumbnail item-left >
+        <img src="{{dia[2]}}">
+      </ion-thumbnail>
+      <h2>{{dia[0]}}</h2>
+      <p>{{dia[1]}}</p>
+      <button ion-button clear item-right (click)="verdia(dia)">Ver</button>
+    </ion-item>
+   
+  </ion-list>
+  <!-- 
+  <button  ion-button block color="secondary" (click)="notificacion()">Notificacion</button>
+       
+       <button  ion-button block color="primary" (click)="consultarEfectos()">Efectos</button>  --> 
+       <button  ion-button block color="secondary" (click)="notificacion()">Notificacion</button>
+</ion-content>

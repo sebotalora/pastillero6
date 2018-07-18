@@ -1,0 +1,50 @@
+<ion-content padding>
+
+  <ion-img src="assets/imgs/pastillero-01.png"></ion-img>
+  <div><p></p></div>
+  <!--Search graphic by <a href="http://www.flaticon.com/authors/icomoon">Icomoon</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>-->
+  
+  <form id="login-form">
+    
+    <ion-list>
+
+      <ion-item>
+        <input [(ngModel)]="user.email"
+        name="correo_"
+        type="text" 
+        id="email"
+        value="yyuu@j.com"
+        placeholder="Correo Electrónico"
+        autocapitalize="off"
+        required
+        >
+      </ion-item>
+
+      <ion-item>
+        <input [(ngModel)]="user.password"
+        name="clave_" 
+        type="password" 
+        id="password" 
+        value="yyuuyy"
+        placeholder="Contraseña" 
+        required>
+      </ion-item>
+
+    </ion-list>
+
+    <div class="row" id="row-btn-1">
+      
+      <ion-col col-12 id="col-btn-mail">
+          <button ion-button round id="botonLogin" type="submit" (click)="click_login()">Iniciar Sesión</button>
+      </ion-col>
+      
+    </div>
+    
+   
+  </form>
+
+  
+
+  <button ion-button clear (click)="signUp()">¿No tienes cuenta? Regístrate aquí!</button>
+
+</ion-content>

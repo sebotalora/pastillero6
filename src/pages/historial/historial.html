@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Fórmulas Médicas
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="card-background-page">
+    <ion-card *ngIf="vacio">
+        <ion-card-header>
+          No hay fórmulas registradas hoy!
+        </ion-card-header>
+        <ion-card-content>
+          Haz click en + para añadir una.
+        </ion-card-content>
+      </ion-card>
+
+  <ion-list *ngFor="let form of formulas">
+  <ion-card (click)="ver_formula(form)">
+          <img id="image" src="{{form[4]}}"/>
+          <div class="card-title">Fórmula {{form[0]}}</div>
+          <div class="card-subtitle">{{form[2]}}</div>
+  </ion-card>
+      
+</ion-list>
+
+  <ion-fab left bottom>
+    <button ion-fab color="primary" (click)="grafica()"><ion-icon name="pie"></ion-icon></button>
+</ion-fab>
+
+    <ion-fab right bottom>
+        <button ion-fab color="secondary" (click)="presentActionSheet()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+    
+</ion-content>

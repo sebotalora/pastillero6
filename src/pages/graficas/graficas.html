@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-title>
+        Estadísticas
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+   
+  <ion-content>
+   
+         
+      <ion-card>
+        <ion-card-header style="font-weight: bold;">
+          Histórico Medicamentos
+        </ion-card-header>
+        <ion-card-content>
+          <canvas #lineCanvas></canvas>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header style="font-weight: bold;">
+          Ver gráficas por medicamento
+        </ion-card-header>
+      
+        <ion-list *ngFor="let med of listaMed">
+        <ion-item >
+            <h2 style="white-space: normal;">{{med}} </h2>
+            <button ion-button clear item-right (click)="graf_med(med)">Ver</button>
+          </ion-item>
+        </ion-list>
+        
+        
+      </ion-card>
+
+      <button ion-button block color="primary" (click)="cerrar()">Atrás</button>
+  
+  </ion-content>

@@ -1,0 +1,19 @@
+
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Efectos Adversos {{nombre}}</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding>
+    <p style="font-weight: bold;">Los efectos listados a continuación, representan una probabilidad de ocurrencia. </p>
+    Tomado del reporte de Efectos Adversos publicados por el INVIMA. Por favor consulta con tu médico.
+    Los posibles efectos aversos son:
+        <ion-list *ngFor="let med of lista_efectos">
+            <ion-item >
+                <p style="white-space: normal; font-weight: bold;">{{med}} </p>
+              </ion-item>
+        </ion-list>
+        <button ion-button block color="danger" (click)="cerrar()">Cerrar</button>
+  </ion-content>
+  
