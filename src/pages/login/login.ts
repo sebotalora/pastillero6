@@ -74,13 +74,13 @@ export class LoginPage {
       dismissOnPageChange: true
     }).present();
    self.navCtrl.push(TabsPage);
-   this.localNotifications.cancelAll();
-   this.actualizarCronograma(this.bd.idactual());
+ //  this.localNotifications.cancelAll();
+  // this.actualizarCronograma(this.bd.idactual());
    localStorage.setItem("Correo_Pastillero", this.user.email);
    localStorage.setItem("Clave_Pastillero", this.user.password);
    
-   console.log(">>>>>>>>>>>Inicio de sesion",this.end());
-    this.showPopup(">>>>>>>>>>>Inicio de sesion", this.end());
+  // console.log(">>>>>>>>>>>Inicio de sesion",this.end());
+   // this.showPopup(">>>>>>>>>>>Inicio de sesion", this.end());
     }
   )
    .catch(err=>{
@@ -120,10 +120,12 @@ export class LoginPage {
 
  actualizarCronograma(id){
   this.localNotifications.cancelAll();
-  firebase.database().ref('/cronograma/'+id+'/').on('value', (snapshot) => {
-    
+  firebase.database().ref('/cronograma/'+id+'/').once('value', (snapshot) => {
+    snapshot.forEach(hist => {
 
-    snapshot.forEach(dia => {
+      hist.forEach(med => {
+
+      med.forEach(dia => {
 
       dia.forEach(meds => {
       //  var keyMed = meds.key;
@@ -132,8 +134,8 @@ export class LoginPage {
         var hora = meds.child('hora').val();
         var medicamento = meds.child('medicamento').val();
         var presentacion = meds.child('presentacion').val();
-       
-        this.notificacion(this.idNotif(fecha,hora),this.fecha(fecha,hora),this.texto(presentacion,medicamento));
+        var idnoti = meds.child('notificacion').val();
+        this.notificacion(idnoti,this.fecha(fecha,hora),this.texto(presentacion,medicamento));
 
         return false;
       });
@@ -142,6 +144,10 @@ export class LoginPage {
         return false;
       });
 
+      return false;
+    });
+    return false;
+  });
    });
  }
 

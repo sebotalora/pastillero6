@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import firebase from 'firebase';
 
 @IonicPage()
@@ -15,7 +15,7 @@ export class PreviewModalPage {
   nombre: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private viewCtrl: ViewController,private alertCtrl: AlertController) {
+    private alertCtrl: AlertController) {
     this.keymed = this.navParams.get('keymed');
     this.idusuario = this.navParams.get('idusuario');
     this.idhistoria = this.navParams.get('idhistoria');
@@ -24,8 +24,8 @@ export class PreviewModalPage {
     console.log(this.keymed," ",this.idusuario," ",this.idhistoria);
 
     this.efectosMed();
-    console.log(">>>>>>>>>>>Carga Efectos",this.end());
-    this.showPopup(">>>>>>>>>>>Carga Efectos", this.end());
+    //console.log(">>>>>>>>>>>Carga Efectos",this.end());
+    //this.showPopup(">>>>>>>>>>>Carga Efectos", this.end());
   }
 
   cerrar(){

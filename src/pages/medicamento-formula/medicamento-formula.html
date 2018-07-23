@@ -57,8 +57,42 @@
                     <ion-label stacked>Presentación:</ion-label>
                     <ion-select [(ngModel)]="presentacion" name="presentacio" formControlName="presentacio" [class.error1]="!group.controls.presentacio.valid">
                            
-                      <ion-option *ngFor="let item of presentacionData" [value]="item" multiple="false"  >{{item}}</ion-option>
-                      
+                   <!--    <ion-option *ngFor="let item of presentacionData" [value]="item" multiple="false"  >{{item}}</ion-option>
+                       -->
+                      <ion-option value="AMPOLLA">AMPOLLA</ion-option>
+                      <ion-option value="AMPOLLAS">AMPOLLAS</ion-option>
+                      <ion-option value="AMPOLLETA">AMPOLLETA</ion-option>
+                      <ion-option value="AMPOLLETAS">AMPOLLETAS</ion-option>
+                      <ion-option value="CAPSULA">CAPSULA</ion-option>
+                      <ion-option value="CAPSULAS">CAPSULAS</ion-option>
+                      <ion-option value="CHUCHARA">CHUCHARA</ion-option>
+                      <ion-option value="CREMA">CREMA</ion-option>
+                      <ion-option value="CREMAS">CREMAS</ion-option>
+                      <ion-option value="CUCHARADA">CUCHARADA</ion-option>
+                      <ion-option value="CUCHARADAS">CUCHARADAS</ion-option>
+                      <ion-option value="CUCHARAS">CUCHARAS</ion-option>
+                      <ion-option value="CUCHARITA">CUCHARITA</ion-option>
+                      <ion-option value="CUCHARITAS">CUCHARITAS</ion-option>
+                      <ion-option value="GOTA">GOTA</ion-option>
+                      <ion-option value="GOTAS">GOTAS</ion-option>
+                      <ion-option value="INYECCION">INYECCION</ion-option>
+                      <ion-option value="INYECCIONES">INYECCIONES</ion-option>
+                      <ion-option value="JARABE">JARABE</ion-option>
+                      <ion-option value="JARABES">JARABES</ion-option>
+                      <ion-option value="PASTA">PASTA</ion-option>
+                      <ion-option value="PASTAS">PASTAS</ion-option>
+                      <ion-option value="POLVO">POLVO</ion-option>
+                      <ion-option value="POLVOS">POLVOS</ion-option>
+                      <ion-option value="SUERO">SUERO</ion-option>
+                      <ion-option value="SUEROS">SUEROS</ion-option>
+                      <ion-option value="TAB">TAB</ion-option>
+                      <ion-option value="TABLETA">TABLETA</ion-option>
+                      <ion-option value="TABLETAS">TABLETAS</ion-option>
+                      <ion-option value="TABS">TABS</ion-option>
+                      <ion-option value="VITAMINA">VITAMINA</ion-option>
+                      <ion-option value="VITAMINAS">VITAMINAS</ion-option>
+
+
                     </ion-select>
                   </ion-item>
             </ion-col>
@@ -90,9 +124,22 @@
                     <ion-item>
                         <ion-label stacked>Unidad de tiempo:</ion-label>
                         <ion-select [(ngModel)]="frecuencia_utiempo" name="frecuencia_utiemp" formControlName="frecuencia_utiemp"  [class.error1]="!group.controls.frecuencia_utiemp.valid">
-                           
+                          <!--  
                           <ion-option *ngFor="let item of frecuenciaData" [value]="item" multiple="false" >{{item}}</ion-option>
-                          
+                           -->
+                          <ion-option value="DIA">DIA</ion-option>
+                          <ion-option value="DIAS">DIAS</ion-option>
+                          <ion-option value="HORA">HORA</ion-option>
+                          <ion-option value="HORAS">HORAS</ion-option>
+                          <ion-option value="MINUTOS">MINUTOS</ion-option>
+                          <ion-option value="MINUTO">MINUTO</ion-option>
+                          <ion-option value="MES">MES</ion-option>
+                          <ion-option value="MESES">MESES</ion-option>
+                          <ion-option value="SEMANA">SEMANA</ion-option>
+                          <ion-option value="SEMANAS">SEMANAS</ion-option>
+
+
+
                         </ion-select>
                       </ion-item>
                 </ion-col>

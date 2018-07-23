@@ -19,7 +19,7 @@ import { TabsPage } from '../tabs/tabs';
 export class RegistroPage {
 
   createSuccess = false;
-  registerCredentials = { name: '', email: '', password: '', confirmation_password: '', apellido:'', edad:'', telefono:'', sexo:'',nacimiento:''};
+  registerCredentials = { name: '', email: '', password: '', confirmation_password: '', apellido:'', edad:'', telefono:'', sexo:'',nacimiento:new Date().toISOString().slice(0, 10)};
 
   constructor(
     private nav: NavController, public loadingCtrl: LoadingController, private alertCtrl: AlertController, private auth: AutenticacionProvider, private bd: BdfirebaseProvider

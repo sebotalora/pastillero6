@@ -23,7 +23,7 @@ import { HttpClient} from '@angular/common/http';
 })
 export class MedicamentoFormulaPage implements OnInit{
   medicamento="";
-  medicVacio=false;
+  medicVacio=true;
   medicamentosData = [];
   cantidad_total: number;
   presentacion: string;
@@ -56,8 +56,8 @@ export class MedicamentoFormulaPage implements OnInit{
     this.total_med = this.navParams.get('total');
     this.nombre_formula= this.navParams.get('siguiente');
 
-    this.leerCSV_presentacion();
-    this.leerCSV_frecuencia();
+    //this.leerCSV_presentacion();
+   // this.leerCSV_frecuencia();
     this.desglosar_info();
     
     
@@ -113,9 +113,10 @@ export class MedicamentoFormulaPage implements OnInit{
       }
       if (tamanoM>=1){
         this.medicamento=this.medicamentosData[0];
+        this.medicVacio=false;
       }else{
         this.medicamento="";
-        this.medicVacio=true;
+        
       }
       
     }
@@ -265,15 +266,16 @@ export class MedicamentoFormulaPage implements OnInit{
     return  ("0" + number).slice(-2);
     
   }
+  loading = this.loadingCtrl.create({
+    content: '<ion-spinner name="crescent"></ion-spinner> Espera un momento...',
+    duration: 8000,
+    dismissOnPageChange: true
+  });
 
   registrar() {
-    this.start();
-    let self = this;
-    self.loadingCtrl.create({
-      content: '<ion-spinner name="crescent"></ion-spinner> Espera un momento...',
-      duration: 8000,
-      dismissOnPageChange: true
-    }).present();
+   // this.start();
+   this.loading.present(); 
+
     var id_actual=this.bd.idactual();
     if (this.group.valid) {
 
@@ -290,27 +292,125 @@ export class MedicamentoFormulaPage implements OnInit{
         this.hora_inicio
       );
 
-      this.notificacion(this.idNotif(this.fecha_inicio,this.hora_inicio),this.fecha(this.fecha_inicio,this.hora_inicio), this.texto());
-    
       this.bd.addfecha2(
-      id_actual,
-      this.nombre_formula,
-      new Date().toISOString().slice(0, 10)
-    );
+        id_actual,
+        this.nombre_formula,
+        new Date().toISOString().slice(0, 10)
+      );
 
-    this.cronograma(this.frecuencia_cant,this.frecuencia_utiempo);
-    this.cronograma_firebase(id_actual);
-
-    this.consultarEfectos(id_actual);
+      this.consultarEfectos(id_actual);
+      this.cronograma(this.frecuencia_cant,this.frecuencia_utiempo);
+      //this.cronograma_firebase(id_actual);
       
-    this.nav.pop();
-    this.showPopup(">>>>>>>>>>>Carga Medicamento", this.end());
-    console.log(">>>>>>>>>>>Carga Medicamento",this.end());
+     
+      this.ccerrar(this.servidorfirebase(id_actual));
+
     }else{
       console.log("NO VALIDO" );
     }
     
   }
+
+  ccerrar(a){
+    this.loading.dismiss();
+    this.nav.pop();
+  }
+
+
+    f1() {
+      return new Promise((resolve, reject) => {
+        this.loading.present(); 
+
+        var id_actual=this.bd.idactual();
+        if (this.group.valid) {
+    
+          this.bd.addMedicamento(
+            id_actual,
+            this.nombre_formula,
+            "m".concat(this.numero.toString()),
+            this.medicamento,
+            this.cantidad_total,
+            this.presentacion,
+            this.frecuencia_cant,
+            this.frecuencia_utiempo,
+            this.fecha_inicio,
+            this.hora_inicio
+          );
+    
+          this.bd.addfecha2(
+            id_actual,
+            this.nombre_formula,
+            new Date().toISOString().slice(0, 10)
+          );
+    
+          this.consultarEfectos(id_actual);
+          this.cronograma(this.frecuencia_cant,this.frecuencia_utiempo);
+          this.cronograma_firebase(id_actual);
+         // this.servidorfirebase(id_actual);
+        
+        }else{
+          console.log("NO VALIDO" );
+        }
+          resolve();
+      });
+      }
+  
+      f2() {
+        this.loading.dismiss();
+        this.nav.pop();
+      }
+
+    
+rg1(){
+  this.f1().then(res => this.f2());
+}
+
+
+  
+
+  registrarparte2(id_actual){
+    this.cronograma_firebase(id_actual);
+    let alert = this.alertCtrl.create({
+      title: 'Notificaciones',
+      subTitle: 'Terminado',
+      buttons: [{
+        text: 'Acepto',
+        handler: () => {
+          console.log('Acepto clicked');
+          this.nav.pop();
+          
+        }
+      }]
+    });
+    alert.present();
+            
+  }
+  
+  servidorfirebase(id_actual){
+    console.log("FIREBASE")
+  // this.agendarNotificaciones();
+    
+     var url='http://192.168.1.151:3000/guardarCronograma?'
+     +'id='+id_actual+'&fechainicio='+this.fecha_inicio+'&horainicio='+this.hora_inicio+'&cantidad='+this.cantidad_total
+     +'&frecuencia='+this.frecuencia_cant+'&tiempo='+this.frecuencia_utiempo+'&nombreformula='+this.nombre_formula
+     +'&numero='+this.numero+'&medicamento='+this.medicamento+'&presentacion='+this.presentacion;
+     console.log(url);
+
+     this.http.get(url).map(res => res.json()).subscribe(data => {
+          
+           console.log(data["data"][0]);
+   
+       });
+       console.log("FIREBASE2");
+      return url;
+       
+  }
+
+  agendarNotificaciones(){
+    for(var i = 0; i < this.cronograma_texto.length; i++){
+      this.notificacion(this.idNotif(this.fecha_inicio,this.hora_inicio),this.fecha(this.fecha_inicio,this.hora_inicio), this.texto());
+    }
+   }
 
   
 
@@ -321,8 +421,10 @@ export class MedicamentoFormulaPage implements OnInit{
     
      for(var i = 0; i < cantidad_med; i++){
 
-     
-      this.crearIndex(id_actual,this.cronograma_texto[i][0],this.cronograma_texto[i][1]);
+      var idnot =this.idNotif(this.fecha_inicio,this.hora_inicio);
+     //this.notificacion(idnot,this.fecha(this.fecha_inicio,this.hora_inicio), this.texto());
+           
+      this.crearIndex(id_actual,this.cronograma_texto[i][0],this.cronograma_texto[i][1],idnot);
       
     } 
 
@@ -330,22 +432,24 @@ export class MedicamentoFormulaPage implements OnInit{
 
  
 
-  agregar_fecha_cronograma(id,index,fecha,hora,med){
-   ;
-    firebase.database().ref('/cronograma/'+id+'/'+fecha+'/'+index).set({
+  agregar_fecha_cronograma(id,index,fecha,hora,med,idnot){
+   
+    firebase.database().ref('/cronograma/'+id+'/'+this.nombre_formula+"/"+"m".concat(this.numero.toString())+"/"+fecha+'/'+index).set({
       fecha:fecha,
       hora: hora,
       medicamento: med,
-      presentacion: this.presentacion
+      presentacion: this.presentacion,
+      ruta: this.nombre_formula+"/"+"m".concat(this.numero.toString()),
+      notificacion: idnot
     }); 
         
    
   }
 
-  crearIndex(id,fecha,hora){
+  crearIndex(id,fecha,hora,idnot){
     var h=hora.split(":");
-    var indexacion=this.nombre_formula+"_"+this.medicamento.replace("/", "-")+"_"+h[0]+h[1];
-    this.agregar_fecha_cronograma(id,indexacion,fecha,hora,this.medicamento);
+    var indexacion=this.nombre_formula+"m".concat(this.numero.toString())+"_"+h[0]+h[1];
+    this.agregar_fecha_cronograma(id,indexacion,fecha,hora,this.medicamento,idnot);
   }
 
   /* verificar_indexacion_fecha(id,fecha,hora ,num=1){
@@ -458,10 +562,10 @@ export class MedicamentoFormulaPage implements OnInit{
 
   idNotif(fecha: String,hora : String,cont=1){
     var id;
-    var parte_fecha =fecha.split('-');
-    var parte_hora =hora.split(':');
-    id=parte_fecha[0]+parte_fecha[1]+parte_fecha[2]+parte_hora[0]+parte_hora[1]+cont.toString()+"0";
-  
+   // var parte_fecha =fecha.split('-');
+    //var parte_hora =hora.split(':');
+    //id=parte_fecha[0]+parte_fecha[1]+parte_fecha[2]+parte_hora[0]+parte_hora[1]+cont.toString()+"0";
+    id="99"+this.nombre_formula.slice(1)+"99"+this.numero.toString()+cont.toString()
     if(this.id_notificaciones.indexOf(id)==-1){
       
       this.id_notificaciones.push(id);

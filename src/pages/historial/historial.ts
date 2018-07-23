@@ -41,8 +41,8 @@ export class HistorialPage {
       var idd=this.bd.idactual();
       this.init_formulas(idd);
       this.traerCronograma(idd);
-      console.log(">>>>>>>>>>>Carga Historias",this.end());
-      this.showPopup(">>>>>>>>>>>Carga Historias", this.end());
+      //console.log(">>>>>>>>>>>Carga Historias",this.end());
+      //this.showPopup(">>>>>>>>>>>Carga Historias", this.end());
   
       
     }
@@ -240,11 +240,14 @@ siguiente_nombre(id,numero=this.cantidad_formulas+1){
 
 
 traerCronograma(id){
+  console.log("************************ACTUALIZANDOOO***************")
   
-  firebase.database().ref('/cronograma/'+id+'/').on('value', (snapshot) => {
-    
+  firebase.database().ref('/cronograma/'+id+'/').once('value', (snapshot) => {
+    snapshot.forEach(hist => {
 
-    snapshot.forEach(dia => {
+      hist.forEach(med => {
+
+        med.forEach(dia => {
 
       dia.forEach(meds => {
        // var keyMed = meds.key;
@@ -267,7 +270,12 @@ traerCronograma(id){
         
         return false;
       });
-
+      return false;
+    });
+      
+      
+      return false;
+    });
    });
    
  }

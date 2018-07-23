@@ -85,7 +85,7 @@ export class UploadModalPage {
         
       });
       alert.present();
-      console.log(">>>>>>>>>>>Carga Foto",this.end());
+    //  console.log(">>>>>>>>>>>Carga Foto",this.end());
 
       //let nuevaf  = this.modalCtrl.create(FormulaActualPage, {formula: JSON.parse(res.response)});
      // nuevaf.present();

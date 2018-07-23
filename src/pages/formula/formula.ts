@@ -31,8 +31,8 @@ export class FormulaPage {
     this.startTime = this.navParams.get('startTime');
     this.id_=this.bd.idactual();
     this.traerFormula(this.bd.idactual());
-    console.log(">>>>>>>>>>>Carga Formula",this.end());
-    this.showPopup(">>>>>>>>>>>Carga Formula", this.end());
+   // console.log(">>>>>>>>>>>Carga Formula",this.end());
+  //  this.showPopup(">>>>>>>>>>>Carga Formula", this.end());
   }
 
   ionViewDidLoad() {
@@ -43,7 +43,7 @@ export class FormulaPage {
   }
   terminar(){
     this.textojson=this.textojson.slice(0,-1)+"}}}"
-    //console.log(this.textojson);
+    this.showPopup("texto JSON Fórmula", this.textojson);
   }
 
   traerFormula(id){

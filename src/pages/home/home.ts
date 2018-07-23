@@ -3,6 +3,9 @@ import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { HttpClient} from '@angular/common/http';
 import { Http } from '@angular/http';
+import { BdfirebaseProvider } from '../../providers/bdfirebase/bdfirebase';
+import firebase from 'firebase';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -21,7 +24,7 @@ export class HomePage {
   ['Sábado','Fecha','assets/imgs/dias_semana-00.png']
 ];
   constructor(public navCtrl: NavController,public modalCtrl: ModalController,
-    private localNotifications: LocalNotifications,private http: Http,
+    private localNotifications: LocalNotifications,private http: Http,private bd: BdfirebaseProvider,
     public https: HttpClient, private alertCtrl: AlertController) {
     let indice=this.hoy.getDay();
     this.dias_ord=this.dias.slice(indice,7).concat(this.dias.slice(0,indice));
@@ -43,6 +46,9 @@ export class HomePage {
       this.dias_ord[i][4]=mm;
       this.dias_ord[i][5]=y;
     }
+
+    this.localNotifications.cancelAll();
+    this.actualizarCronograma(this.bd.idactual());
   }
   startTime;
   start() {
@@ -65,10 +71,10 @@ export class HomePage {
     
   }
 
-  notificacion(){
+  notificacion2(){
     this.getNoti();
     //"assets/sonidos/open-ended.mp3"
-    var fecha_y_hora = new Date(
+    /* var fecha_y_hora = new Date(
       parseInt('2018'), 
       parseInt('07') - 1, 
       parseInt('15'),
@@ -76,7 +82,7 @@ export class HomePage {
       parseInt('08'),
       0,
       0
-    );
+    ); */
     this.localNotifications.schedule({
       id: 1,
       title: 'Hora de tomar tu medicamento:',
@@ -126,6 +132,103 @@ export class HomePage {
       ]
     });
     alert.present();
+  }
+
+  actualizarCronograma(id){
+    this.localNotifications.cancelAll();
+    firebase.database().ref('/cronograma/'+id+'/').on('value', (snapshot) => {
+      snapshot.forEach(hist => {
+  
+        hist.forEach(med => {
+  
+        med.forEach(dia => {
+  
+        dia.forEach(meds => {
+        //  var keyMed = meds.key;
+  
+          var fecha = meds.child('fecha').val();
+          var hora = meds.child('hora').val();
+          var medicamento = meds.child('medicamento').val();
+          var presentacion = meds.child('presentacion').val();
+          var idnoti = meds.child('notificacion').val();
+          this.notificacion(idnoti,this.fecha(fecha,hora),this.texto(presentacion,medicamento));
+  
+          return false;
+        });
+          
+          
+          return false;
+        });
+  
+        return false;
+      });
+      return false;
+    });
+     });
+   }
+  
+   notificacion(id,fecha, texto){
+    //"assets/sonidos/open-ended.mp3"
+  
+    this.localNotifications.schedule({
+      id: id,
+      title: 'Hora de tomar tu medicamento:',
+      text: texto,
+      trigger: {at: fecha},
+      icon: 'file://assets/imgs/pildoras-01.png',
+      sound: 'file://assets/sonidos/open-ended.mp3',
+      vibrate: true,
+      wakeup: true,
+      color:"2dd30c"
+   }); 
+  
+  }
+  
+  texto(present,medicamento){
+    var textof="";
+    if(present.slice(-1)=="s" || present.slice(-1)=="S"){
+      
+      textof=medicamento+" - 1 "+present.slice(0,-1);
+    }else{
+      textof=medicamento+" - 1 "+present;
+    }
+   
+    return textof;
+  }
+  
+  fecha(fecha,hora){
+    var parte_fecha =fecha.split('-');
+    var parte_hora =hora.split(':');
+    var fecha_y_hora = new Date(parseInt(
+      parte_fecha[0]), 
+      parseInt(parte_fecha[1]) - 1, 
+      parseInt(parte_fecha[2]),
+      parseInt(parte_hora[0]),
+      parseInt(parte_hora[1]),
+      0,
+      0
+    );
+   
+    return fecha_y_hora;
+  }
+  
+  id_notificaciones=[];
+  
+  idNotif(fecha: String,hora : String,cont=1){
+    var id;
+    var parte_fecha =fecha.split('-');
+    var parte_hora =hora.split(':');
+    id=parte_fecha[0]+parte_fecha[1]+parte_fecha[2]+parte_hora[0]+parte_hora[1]+cont.toString();
+  
+    if(this.id_notificaciones.indexOf(id)==-1){
+      
+      this.id_notificaciones.push(id);
+      return parseInt(id);
+    }else{
+      
+      return this.idNotif(fecha,hora,cont+1);
+    }
+  
   }
 
 }
