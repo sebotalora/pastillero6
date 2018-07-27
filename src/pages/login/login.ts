@@ -1,5 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController  } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController , ModalController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { RegistroPage } from '../registro/registro';
 import { AutenticacionProvider } from '../../providers/autenticacion/autenticacion';
@@ -31,7 +31,8 @@ export class LoginPage {
     public auth : AutenticacionProvider,
     public alertCtrl : AlertController,
     private localNotifications: LocalNotifications,
-    private bd: BdfirebaseProvider) {
+    private bd: BdfirebaseProvider,
+    public modalCtrl: ModalController) {
       
       this.check();
     this.element.nativeElement
@@ -99,6 +100,12 @@ export class LoginPage {
   public signUp() {
     this.navCtrl.push(RegistroPage);
   }
+
+  public acerca() {
+    let modal_acerca = this.modalCtrl.create('AcercaPage');
+    modal_acerca.present();
+  }
+
   public goSignUp() {
     
     this.auth.registerUser(this.user.email,this.user.password)

@@ -274,7 +274,9 @@ export class MedicamentoFormulaPage implements OnInit{
 
   registrar() {
    // this.start();
-   this.loading.present(); 
+   setTimeout(() => {
+    this.loading.present();
+    }, 300)
 
     var id_actual=this.bd.idactual();
     if (this.group.valid) {
@@ -299,8 +301,8 @@ export class MedicamentoFormulaPage implements OnInit{
       );
 
       this.consultarEfectos(id_actual);
-      this.cronograma(this.frecuencia_cant,this.frecuencia_utiempo);
-      //this.cronograma_firebase(id_actual);
+     // this.cronograma(this.frecuencia_cant,this.frecuencia_utiempo);
+     // this.cronograma_firebase(id_actual);
       
      
       this.ccerrar(this.servidorfirebase(id_actual));
@@ -344,9 +346,9 @@ export class MedicamentoFormulaPage implements OnInit{
           );
     
           this.consultarEfectos(id_actual);
-          this.cronograma(this.frecuencia_cant,this.frecuencia_utiempo);
-          this.cronograma_firebase(id_actual);
-         // this.servidorfirebase(id_actual);
+          //this.cronograma(this.frecuencia_cant,this.frecuencia_utiempo);
+          //this.cronograma_firebase(id_actual);
+          this.servidorfirebase(id_actual);
         
         }else{
           console.log("NO VALIDO" );
@@ -390,7 +392,7 @@ rg1(){
     console.log("FIREBASE")
   // this.agendarNotificaciones();
     
-     var url='http://192.168.1.151:3000/guardarCronograma?'
+     var url='http://186.154.95.101/ocrpastillero/guardarCronograma?'
      +'id='+id_actual+'&fechainicio='+this.fecha_inicio+'&horainicio='+this.hora_inicio+'&cantidad='+this.cantidad_total
      +'&frecuencia='+this.frecuencia_cant+'&tiempo='+this.frecuencia_utiempo+'&nombreformula='+this.nombre_formula
      +'&numero='+this.numero+'&medicamento='+this.medicamento+'&presentacion='+this.presentacion;

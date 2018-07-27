@@ -136,7 +136,7 @@ export class HomePage {
 
   actualizarCronograma(id){
     this.localNotifications.cancelAll();
-    firebase.database().ref('/cronograma/'+id+'/').on('value', (snapshot) => {
+    firebase.database().ref('/cronograma/'+id+'/').once('value', (snapshot) => {
       snapshot.forEach(hist => {
   
         hist.forEach(med => {
@@ -145,14 +145,15 @@ export class HomePage {
   
         dia.forEach(meds => {
         //  var keyMed = meds.key;
-  
-          var fecha = meds.child('fecha').val();
-          var hora = meds.child('hora').val();
-          var medicamento = meds.child('medicamento').val();
-          var presentacion = meds.child('presentacion').val();
-          var idnoti = meds.child('notificacion').val();
-          this.notificacion(idnoti,this.fecha(fecha,hora),this.texto(presentacion,medicamento));
-  
+          
+          if(meds.child('estado').val()=="activo"){
+            var fecha = meds.child('fecha').val();
+            var hora = meds.child('hora').val();
+            var medicamento = meds.child('medicamento').val();
+            var presentacion = meds.child('presentacion').val();
+            var idnoti = meds.child('notificacion').val();
+            this.notificacion(idnoti,this.fecha(fecha,hora),this.texto(presentacion,medicamento));
+          }          
           return false;
         });
           

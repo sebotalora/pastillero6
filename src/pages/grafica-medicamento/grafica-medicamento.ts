@@ -65,6 +65,15 @@ export class GraficaMedicamentoPage {
                       spanGaps: false,
                   }
               ]
+          },
+          options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
           }
 
       });

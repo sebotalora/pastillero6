@@ -32,9 +32,14 @@
       <p>Tomar a las {{med[0]}}</p>
     </ion-item>
   
-    <button ion-button icon-start clear color="danger" (click)="quitarnot(med)">
+    <button ion-button icon-start clear color="danger" *ngIf="med[7]" (click)="quitarnot(med)">
       <ion-icon name="notifications-off"></ion-icon>
-      <div>Eliminar notificación</div>
+      <div>Desactivar notificación</div>
+    </button>
+
+     <button ion-button icon-start clear color="secondary" *ngIf="!med[7]" (click)="agregarnot(med)">
+      <ion-icon name="notifications"></ion-icon>
+      <div>Activar notificación</div>
     </button>
     
     

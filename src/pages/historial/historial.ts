@@ -186,7 +186,7 @@ init_formulas(id){
       //console.log("Fecha Formula: "+fechaFormula);
       
       var urlimg="";
-      if(this.contador_formulas+1 % 2 == 0) {
+      if(this.contador_formulas % 2 == 0) {
         urlimg="assets/imgs/myjobs/receta1.jpg";
       }
       else {

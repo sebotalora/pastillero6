@@ -73,6 +73,15 @@ export class GraficasPage {
                       spanGaps: false,
                   }
               ]
+          },
+          options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
           }
 
       });
