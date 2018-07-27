@@ -268,7 +268,7 @@ export class MedicamentoFormulaPage implements OnInit{
   }
   loading = this.loadingCtrl.create({
     content: '<ion-spinner name="crescent"></ion-spinner> Espera un momento...',
-    duration: 8000,
+    duration: 12000,
     dismissOnPageChange: true
   });
 

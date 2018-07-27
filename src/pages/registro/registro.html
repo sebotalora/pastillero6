@@ -12,15 +12,15 @@
           <ion-list inset>
             Nombre
             <ion-item>
-              <ion-input type="text" placeholder="Nombre" name="name" [(ngModel)]="registerCredentials.name" required></ion-input>
+              <ion-input type="text"  name="name" [(ngModel)]="registerCredentials.name" required></ion-input>
             </ion-item>
             Apellido
             <ion-item>
-                <ion-input type="text" placeholder="Apellido" name="apellido" [(ngModel)]="registerCredentials.apellido" required></ion-input>
+                <ion-input type="text" name="apellido" [(ngModel)]="registerCredentials.apellido" required></ion-input>
               </ion-item>
               Teléfono
               <ion-item>
-                <ion-input type="number" placeholder="Telefono" name="telefono" [(ngModel)]="registerCredentials.telefono" required></ion-input>
+                <ion-input type="number" name="telefono" [(ngModel)]="registerCredentials.telefono" required></ion-input>
               </ion-item>
               Sexo
               <ion-item>
@@ -28,7 +28,7 @@
                     <ion-input type="text" placeholder="Sexo" name="sexo" [(ngModel)]="registerCredentials.sexo" required></ion-input>
                    -->
                    
-                  <ion-select multiple="false" [placeholder]="Sexo" [(ngModel)]="registerCredentials.sexo" name="sexo"  required>
+                  <ion-select multiple="false"  [(ngModel)]="registerCredentials.sexo" name="sexo"  required>
                            
                       <ion-option [value]="F" >F</ion-option>
                       <ion-option [value]="M" >M</ion-option>
@@ -37,24 +37,24 @@
                 </ion-item>
                 Edad
               <ion-item>
-                  <ion-input type="number" placeholder="Edad" name="edad" [(ngModel)]="registerCredentials.edad" required></ion-input>
+                  <ion-input type="number" name="edad" [(ngModel)]="registerCredentials.edad" required></ion-input>
                 </ion-item>
                 Fecha de Nacimiento
                 <ion-item>
-                  <ion-datetime placeholder="Fecha de Nacimiento" displayFormat="YYYY-MM-DD" [(ngModel)]="registerCredentials.nacimiento" name="nacimiento"></ion-datetime>
+                  <ion-datetime  displayFormat="YYYY-MM-DD" [(ngModel)]="registerCredentials.nacimiento" name="nacimiento"></ion-datetime>
                 </ion-item>
 
                 Correo
             <ion-item>
-              <ion-input type="email" placeholder="Correo" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+              <ion-input type="email"  name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
             </ion-item>
             Contraseña
             <ion-item>
-              <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+              <ion-input type="password"  name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
             </ion-item>
             Confirmar Contraseña
             <ion-item>
-              <ion-input type="password" placeholder="Confirmar Contraseña" name="confirmation_password" [(ngModel)]="registerCredentials.confirmation_password" required></ion-input>
+              <ion-input type="password"  name="confirmation_password" [(ngModel)]="registerCredentials.confirmation_password" required></ion-input>
             </ion-item>
 
           </ion-list>

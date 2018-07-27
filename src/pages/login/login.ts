@@ -125,6 +125,19 @@ export class LoginPage {
     
  }
 
+ recuperar(){
+   if(this.user.email!=""){
+     console.log("check");
+     this.auth.recuperarusuario(this.user.email).then(() => {
+      this.showPopup("Revisa tu correo!", "Te hemos enviado instrucciones de recuperación");
+     }).catch(err=>{
+      this.showPopup("Ups!", "No hemos encontrado este correo electrónico registrado");
+     });
+   }else{
+    this.showPopup("Error", "No detectamos tu correo electrónico para enviarte las instrucciones de recuperación de cuenta.")
+   }
+ }
+
  actualizarCronograma(id){
   this.localNotifications.cancelAll();
   firebase.database().ref('/cronograma/'+id+'/').once('value', (snapshot) => {

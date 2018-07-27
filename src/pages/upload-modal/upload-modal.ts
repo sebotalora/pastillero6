@@ -58,7 +58,7 @@ export class UploadModalPage {
     let self = this;
     self.loadingCtrl.create({
       content: '<ion-spinner name="crescent"></ion-spinner> Cargando...',
-      duration: 8000,
+      duration: 15000,
       dismissOnPageChange: true
     }).present();
 

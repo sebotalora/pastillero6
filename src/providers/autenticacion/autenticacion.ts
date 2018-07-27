@@ -34,6 +34,15 @@ get Session(){
   return this.afAuth.authState;
  }
 
+ recuperarusuario(email:string){
+  return this.afAuth.auth.sendPasswordResetEmail(email)
+    .then(function() {
+      Promise.resolve(true)
+    })
+    .catch(err=>Promise.reject(err));
+}
+
+
  // Logout de usuario
  logout(){
   this.afAuth.auth.signOut().then(()=>{
