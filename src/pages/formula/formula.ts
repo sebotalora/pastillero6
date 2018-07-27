@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { BdfirebaseProvider } from '../../providers/bdfirebase/bdfirebase';
 import firebase from 'firebase';
+import { File } from '@ionic-native/file';
 
 /**
  * Generated class for the FormulaPage page.
@@ -24,7 +25,8 @@ export class FormulaPage {
   id_="";
   
   constructor(public nav: NavController,public modalCtrl: ModalController, public navParams: NavParams,
-    private bd: BdfirebaseProvider,private alertCtrl: AlertController) {
+    private bd: BdfirebaseProvider,private alertCtrl: AlertController,
+    public file: File) {
     
     console.log("FORMULAS")
     this.datos = this.navParams.get('data');
@@ -41,13 +43,38 @@ export class FormulaPage {
   sumarJson(texto){
     this.textojson=this.textojson+texto;
   }
+  
   terminar(){
-    this.textojson=this.textojson.slice(0,-1)+"}}}"
-    this.showPopup("texto JSON Fórmula", this.textojson);
+    //this.textojson=this.textojson.slice(0,-1)+"}}}"
+    ////this.showPopup("texto JSON Fórmula", this.textojson);
+    
+    let carpeta=this.file.createDir(this.file.externalRootDirectory,"Pastillero",true);
+    carpeta.then(data =>{
+      
+      this.file.writeFile(data.toURL(),this.valordirectorio,this.textojsonv2,{replace:true});
+      this.showPopup("Listo","El archivo JSON se ha descargado en tu memoria interna, en la carpeta /Pastillero")
+    
+    }).catch(error =>{
+      this.showPopup("Error","Hubo una falla en la descarga del archivo")
+    });
+  }
+
+  textojsonv2="";
+  sumarJsonv2(texto,filename){
+    var directorio="Pastillero";
+    this.textojsonv2=texto;
+
+  }
+
+  valordirectorio="";
+  directorio(valor){
+    this.valordirectorio=valor;
   }
 
   traerFormula(id){
     firebase.database().ref('/historias/'+id+'/'+this.datos[1]).on('value', (snapshot) => {
+      this.directorio(this.datos[1]+"_"+id+".txt");
+      this.sumarJsonv2(JSON.stringify(snapshot.val()),this.datos[1]+"_"+id+".txt");
       this.setFecha(snapshot.child('fecha').val());
       this.sumarJson('"'+this.datos[1]+'":{ "datos":{"fecha":"'+
       snapshot.child("fecha").val()+'"},"medicamentos":{');

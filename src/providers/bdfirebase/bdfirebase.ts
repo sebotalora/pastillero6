@@ -58,7 +58,7 @@ export class BdfirebaseProvider {
     
   }
   
-  addMedicamento(id, formula, idmed, nombre, canttotal, presentacion, frecuencia, utiempo, fecha, hora){
+  addMedicamento(id, formula, idmed, nombre, canttotal, presentacion, frecuencia, utiempo, fecha, hora,activo){
     try{
       firebase.database().ref(`/historias/`+id+"/"+formula+"/medicamentos/"+idmed).set({
         cantidad:canttotal,
@@ -67,7 +67,8 @@ export class BdfirebaseProvider {
         hora:hora,
         tiempo:frecuencia,
         presentacion:presentacion,
-        nombre: nombre
+        nombre: nombre,
+        activo:activo
       });
     }catch(e){
       console.log("Error med");

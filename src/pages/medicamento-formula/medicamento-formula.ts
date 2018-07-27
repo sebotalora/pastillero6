@@ -281,18 +281,7 @@ export class MedicamentoFormulaPage implements OnInit{
     var id_actual=this.bd.idactual();
     if (this.group.valid) {
 
-      this.bd.addMedicamento(
-        id_actual,
-        this.nombre_formula,
-        "m".concat(this.numero.toString()),
-        this.medicamento,
-        this.cantidad_total,
-        this.presentacion,
-        this.frecuencia_cant,
-        this.frecuencia_utiempo,
-        this.fecha_inicio,
-        this.hora_inicio
-      );
+      
 
       this.bd.addfecha2(
         id_actual,
@@ -326,7 +315,7 @@ export class MedicamentoFormulaPage implements OnInit{
         var id_actual=this.bd.idactual();
         if (this.group.valid) {
     
-          this.bd.addMedicamento(
+          /* this.bd.addMedicamento(
             id_actual,
             this.nombre_formula,
             "m".concat(this.numero.toString()),
@@ -337,7 +326,7 @@ export class MedicamentoFormulaPage implements OnInit{
             this.frecuencia_utiempo,
             this.fecha_inicio,
             this.hora_inicio
-          );
+          ); */
     
           this.bd.addfecha2(
             id_actual,
@@ -579,6 +568,14 @@ rg1(){
   
   }
 
+  activo="";
+  setActivo(valor){
+    this.activo=valor;
+  }
+  activoVacio(){
+    this.activo="";
+  }
+
   consultarEfectos(id_actual){
     var medicamento=this.medicamento;//"NAPROXENO 250 MG TABLETA";
   
@@ -587,6 +584,22 @@ rg1(){
    this.http.get(url).map(res => res.json()).subscribe(data => {
    // console.log("Server:",data["data"]);
         this.arregloEfectos(id_actual,data["data"],Object.keys(data["data"]).length);
+        this.setActivo(data["activo"][0]);
+
+
+        this.bd.addMedicamento(
+          id_actual,
+          this.nombre_formula,
+          "m".concat(this.numero.toString()),
+          this.medicamento,
+          this.cantidad_total,
+          this.presentacion,
+          this.frecuencia_cant,
+          this.frecuencia_utiempo,
+          this.fecha_inicio,
+          this.hora_inicio,
+          data["activo"][0]
+        );
 
     });
   }
