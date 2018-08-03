@@ -41,6 +41,8 @@ export class HistorialPage {
       var idd=this.bd.idactual();
       this.init_formulas(idd);
       this.traerCronograma(idd);
+     // setTimeout(this.ordenarMes(), 1500);
+
       //console.log(">>>>>>>>>>>Carga Historias",this.end());
       //this.showPopup(">>>>>>>>>>>Carga Historias", this.end());
   
@@ -256,8 +258,8 @@ traerCronograma(id){
         var fecha = meds.child('fecha').val();
         //console.log(fecha);
         var fechaaux = fecha.split("-");
-        var mes_anio=meses[parseInt(fechaaux[1])-1]+"-"+fechaaux[0];
-        
+        //var mes_anio=meses[parseInt(fechaaux[1])-1]+"-"+fechaaux[0];
+        var mes_anio=fechaaux[0]+"-"+fechaaux[1];
         var medicamento = meds.child('medicamento').val();
         var presentacion = meds.child('presentacion').val();
        // console.log([mes_anio,fechaaux[0],fechaaux[1],fechaaux[2],medicamento,presentacion]);
@@ -283,21 +285,79 @@ traerCronograma(id){
  
 
  datosgrafica=[];
+ listafinalmes=[];
  listaTodo(arreglo){
   
   this.listaGraf.push(arreglo);
   if (this.listaMes.indexOf(arreglo[0])==-1){
     this.listaMes.push(arreglo[0]);
+   // this.listafinalmes.push(arreglo[1]+"-"+arreglo[2]);
+   // this.setnumber(this.listafinalmes.length);
   }
   if (this.listaMed.indexOf(arreglo[4])==-1){
     this.listaMed.push(arreglo[4]);
   }
   //console.log(this.listaMes);
  }
+
+number=0;
+setnumber(sad){
+this.number=sad;
+}
+lista2=[];
+ ordenarMes(){  
+
+  this.lista2=this.listafinalmes.sort(function(a, b){
+
+    //compare two values
+    if(a < b) return -1;
+    if(a > b) return 1;
+    return 0;
+  
+  });
+ /*  this.listafinalmes.sort(function(a,b){
+
+    var aa=new Date(parseInt(a[1]),(parseInt(a[2])-1),8,0,0,0,0);
+    var bb=new Date(parseInt(b[1]),(parseInt(b[2])-1),8,0,0,0,0);
+
+    if (aa < bb) {
+      return 1;
+    }
+    if (aa < bb) {
+      return -1;
+    }
+    // aa must be equal to bb
+    return 0;
+  }); */
+  
+  setTimeout(this.limpiarMes(), 2000);
+ }
+
+ limpiarMes(){
+   console.log("zxMESEEES***");
+
+   console.log("l1:",this.lista2);
+   console.log("lf:",this.listafinalmes);
+   var meses=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+  console.log("lenght: ",this.number);
+  for(var j=0;j < this.lista2.length; j++){
+    
+    var fechaaux = this.lista2[j].split("-");
+    var mes_anio=meses[parseInt(fechaaux[1])-1]+"-"+fechaaux[0];
+    console.log("yy ",mes_anio);
+    if (this.listaMes.indexOf(mes_anio)==-1){
+      console.log(mes_anio);
+      this.listaMes.push(mes_anio);
+    }
+  }
+  
+ }
  
  datosGrafica1(){
   this.datosSuma=[];
   var contarMes=0;
+  this.listaMes.sort();
+  console.log("df",this.listaMes.sort());
   for(var j=0;j < this.listaMes.length; j++){
     contarMes=0;
    for(var i=0;i < this.listaGraf.length; i++){
