@@ -79,9 +79,15 @@ export class BdfirebaseProvider {
   addEfecto(id, formula, idmed, i,efecto){
     //console.log("Añade Efecto");
     try{
-      firebase.database().ref(`/historias/`+id+"/"+formula+"/medicamentos/"+idmed+"/efectos/"+i).set({
+      console.log("/efectos/"+id+"/"+formula+"/medicamentos/"+idmed+"/efectos/"+i+"/");
+      firebase.database().ref("/efectos/"+id+"/"+formula+"/medicamentos/"+idmed+"/efectos/"+i+"/").set({
         efecto:efecto
+      }).then(function(){
+        console.log("EXITO efecto: ",efecto);
+      }).catch(function(error){
+        console.log("Error efecto:",error);
       });
+      console.log("fin efecto");
     }catch(e){
       console.log("Error med");
     }

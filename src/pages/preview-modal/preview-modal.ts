@@ -34,7 +34,7 @@ export class PreviewModalPage {
 
  
   efectosMed(){
-    firebase.database().ref('/historias/'+this.idusuario+'/'+this.idhistoria+'/medicamentos/'+this.keymed+"/efectos/").on('value', (snapshot) => {
+    firebase.database().ref('/efectos/'+this.idusuario+'/'+this.idhistoria+'/medicamentos/'+this.keymed+"/efectos/").on('value', (snapshot) => {
       snapshot.forEach(efectos => {
        // console.log(efectos.child('efecto').val());
         this.addLista(efectos.child('efecto').val());

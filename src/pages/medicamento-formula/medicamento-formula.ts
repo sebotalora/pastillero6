@@ -617,6 +617,7 @@ rg1(){
   }
   efectoFirebase(id_actual){
     for(var i=0;i<this.efectos.length;i++){
+      console.log("Efe: ",this.efectos[i]);
       this.bd.addEfecto(id_actual,this.nombre_formula,"m".concat(this.numero.toString()),i.toString(),this.efectos[i]);
       
     }
