@@ -6,6 +6,9 @@
     </ion-navbar>
   </ion-header>
   <ion-content padding>
+      <p  *ngIf="vacio" style="font-weight: bold;">No se encontraron efectos adversos. Consulte a su médico. </p>
+
+    <div *ngIf="!vacio">
     <p style="font-weight: bold;">Los efectos listados a continuación, representan una probabilidad de ocurrencia. </p>
     Tomado del reporte de Efectos Adversos publicados por el INVIMA. Por favor consulta con tu médico.
     Los posibles efectos aversos son:
@@ -15,5 +18,6 @@
               </ion-item>
         </ion-list>
         <button ion-button block color="danger" (click)="cerrar()">Cerrar</button>
+      </div>
   </ion-content>
   

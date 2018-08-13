@@ -168,10 +168,20 @@ arreglo_formulas(arreglo){
  // console.log(this.formulas);
 }
 
-init_formulas(id){
-  this.contador_formulas=0;
+setformulascero(){
   this.formulas=[];
+}
+
+contadorformulascero(){
+  this.contador_formulas=0;
+}
+
+init_formulas(id){
+  
+  
   firebase.database().ref('/historias/'+id+'/').on('value', (snapshot) => {
+    this.contadorformulascero();
+    this.setformulascero();
    // console.log("***Cant Formulas "+id+": "+snapshot.numChildren());
     this.cant_formulas(snapshot.numChildren());  /////////////////
    // console.log("Usuario: "+snapshot.key);

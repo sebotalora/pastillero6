@@ -134,9 +134,14 @@ export class HomePage {
     alert.present();
   }
 
+  cancelall(){
+    this.localNotifications.cancelAll();
+  }
+
   actualizarCronograma(id){
     this.localNotifications.cancelAll();
-    firebase.database().ref('/cronograma/'+id+'/').once('value', (snapshot) => {
+    firebase.database().ref('/cronograma/'+id+'/').on('value', (snapshot) => {
+      this.cancelall();
       snapshot.forEach(hist => {
   
         hist.forEach(med => {

@@ -73,7 +73,7 @@ export class FormulaPage {
 
   traerFormula(id){
     firebase.database().ref('/historias/'+id+'/'+this.datos[1]).on('value', (snapshot) => {
-      this.directorio(this.datos[1]+"_"+id+".txt");
+      this.directorio(this.datos[1]+"_"+id+".json");
       this.sumarJsonv2(JSON.stringify(snapshot.val()),this.datos[1]+"_"+id+".txt");
       this.setFecha(snapshot.child('fecha').val());
       this.sumarJson('"'+this.datos[1]+'":{ "datos":{"fecha":"'+
